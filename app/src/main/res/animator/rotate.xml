@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"   >
+
+    <objectAnimator
+            android:propertyName="rotationX"
+            android:duration="1000"
+            android:valueFrom="0"
+            android:valueTo="360"
+            android:valueType="floatType"
+            android:repeatCount="1"
+            android:repeatMode="reverse"/>
+    <objectAnimator
+            android:propertyName="rotationY"
+            android:duration="1000"
+            android:valueFrom="0"
+            android:valueTo="360"
+            android:valueType="floatType"
+            android:repeatCount="1"
+            android:repeatMode="reverse"/>
+
+</set>
+
+
+        <!--
+            android:propertyName="rotation"      二次元で回転
+            android:propertyName="rotationX"     x軸に対し三次元で回転
+            android:propertyName="rotationY"     y軸に対し三次元で回転
+        -->

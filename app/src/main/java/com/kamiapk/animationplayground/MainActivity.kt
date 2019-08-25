@@ -2,15 +2,17 @@ package com.kamiapk.animationplayground
 
 import android.animation.Animator
 import android.animation.AnimatorInflater
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import android.view.ViewPropertyAnimator
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() , Animator.AnimatorListener{
+class MainActivity : AppCompatActivity(){
 
     /*
     XMLを用いたアニメーションのためにAnimator変数を宣言しておく
@@ -45,8 +47,6 @@ class MainActivity : AppCompatActivity() , Animator.AnimatorListener{
         //ターゲットを決めてアニメーション
         scaleAnimator?.apply {
             setTarget(imageview)
-            //このリスナでAnimator.AnimatorListenerのオーバーライドメソッドが呼び出されるようになる
-            addListener(this@MainActivity)
             start()
         }
     }
@@ -57,7 +57,6 @@ class MainActivity : AppCompatActivity() , Animator.AnimatorListener{
         val rotateAnimator = AnimatorInflater.loadAnimator(this, R.animator.rotate)
         rotateAnimator?.apply {
             setTarget(imageview)
-            addListener(this@MainActivity)
             start()
         }
     }
@@ -77,7 +76,6 @@ class MainActivity : AppCompatActivity() , Animator.AnimatorListener{
         //apply関数を使った方が記述がすっきりかける
         fadeAnimator?.apply {
             setTarget(imageview)
-            addListener(this@MainActivity)
             start()
         }
 
@@ -88,30 +86,54 @@ class MainActivity : AppCompatActivity() , Animator.AnimatorListener{
         val translateAnimator = AnimatorInflater.loadAnimator(this, R.animator.translate)
         translateAnimator.apply {
             setTarget(imageview)
-            addListener(this@MainActivity)
             start()
         }
     }
 
 
-    override fun onAnimationRepeat(animation: Animator?) {
-            Toast.makeText(this, "Animation Repeat", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onAnimationEnd(animation: Animator?) {
-            Toast.makeText(this, "Animation End", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onAnimationCancel(animation: Animator?) {
-        if(animation == translateAnimator){
-            Toast.makeText(this, "Animation Cancel", Toast.LENGTH_SHORT).show()
+    fun set(view : View){
+        val animator = AnimatorInflater.loadAnimator(this,R.animator.set)
+        animator.apply{
+            setTarget(imageview)
+            start()
         }
     }
 
-    override fun onAnimationStart(animation: Animator?) {
+    fun bounce(view : View){
+        val animator = AnimatorInflater.loadAnimator(this,R.animator.bounce)
+        animator.apply{
+            setTarget(imageview)
+            start()
+        }
+    }
 
-        Toast.makeText(this, "Animation Start", Toast.LENGTH_SHORT).show()
+    /*
+    viewPropertyAnimator　-> イベントに対して操作ができない(アニメーションだけ)
+    propertyValuesHolder -> イベントに対して操作ができる
+     */
+    fun viewPropertyAnimator(view : View){
+        val vpa : ViewPropertyAnimator = imageview.animate()
+        vpa.apply{
+            duration = 1000
+            rotationX(360.0f)
+            scaleX(1.5f)
+            scaleY(1.5f)
+            //interpolator = BounceInterpolator()
+            start()
+        }
+    }
 
+    fun propertyValuesHolder(view : View){
+        val rotateX : PropertyValuesHolder = PropertyValuesHolder.ofFloat("rotationX", 360f)
+        val scaleX = PropertyValuesHolder.ofFloat("scaleX", 1.5f)
+        val scaleY = PropertyValuesHolder.ofFloat("scaleY", 1.5f)
+
+        val objAnim = ObjectAnimator.ofPropertyValuesHolder(imageview, rotateX, scaleX, scaleY)
+        objAnim.apply {
+            duration = 1000
+            //interpolator = BounceInterpolator()
+            start()
+        }
     }
 
 

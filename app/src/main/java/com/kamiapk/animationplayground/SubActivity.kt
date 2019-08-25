@@ -1,5 +1,6 @@
 package com.kamiapk.animationplayground
 
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import androidx.appcompat.app.AppCompatActivity
@@ -75,6 +76,43 @@ class SubActivity : AppCompatActivity() {
     }
 
 
+    fun set(view : View) {
+
+        //Root Animator Setとして、Child Animator SetまでRootに属するアニメーション
+        //AnimatorSet()でインスタンスを取得
+        //最後に関係性を
+        val rootSet = AnimatorSet()
+        // Flip Animation
+        val flip = ObjectAnimator.ofFloat(imageview, "rotationX", 0.0f, 360.0f)
+        flip.duration = 500
+
+
+
+        // Child Animator Set
+        val childSet = AnimatorSet()
+        // Scale Animations
+        val scaleX = ObjectAnimator.ofFloat(imageview, "scaleX", 1.0f, 1.5f)
+        scaleX.duration = 500
+        val scaleY = ObjectAnimator.ofFloat(imageview, "scaleY", 1.0f, 1.5f)
+        scaleY.duration = 500
+
+
+        //関係性を記述する
+        //可変長引数なので割と選択の幅が広い
+        //rootSet.playSequentially(flip,childSet)
+        //childSet.playTogether(scaleX,scaleY)
+
+        //関係性の記述にはいくつかの書き方がある
+        rootSet.play(flip).before(childSet)
+        childSet.play(scaleX).with(scaleY)
+
+        //最後にアニメーションの開始
+        rootSet.start()
+
+    }
+
+
 
 
 }
+

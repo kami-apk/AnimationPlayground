@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_sub.*
 
 
 //Animation using code
-class SubActivity : AppCompatActivity() {
+class CodePropertyAnimationActivity : AppCompatActivity() {
 
     private var rotateObjectAnimator: ObjectAnimator? = null
     private var translateObjectAnimator: ObjectAnimator? = null

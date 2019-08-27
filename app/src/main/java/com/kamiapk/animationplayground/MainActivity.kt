@@ -17,12 +17,12 @@ class MainActivity : AppCompatActivity(){
     /*
     XMLを用いたアニメーションのためにAnimator変数を宣言しておく
     といってもオーバーライドメソッドで利用するくらいしかなさそう?
-     */
+
     private var rotateAnimator: Animator? = null
     private var translateAnimator: Animator? = null
     private var scaleAnimator: Animator? = null
     private var fadeAnimator: Animator? = null
-
+    */
 
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -31,7 +31,12 @@ class MainActivity : AppCompatActivity(){
         setContentView(R.layout.activity_main)
 
         code_button.setOnClickListener {
-            val intent = Intent(this, SubActivity::class.java)
+            val intent = Intent(this, CodePropertyAnimationActivity::class.java)
+            startActivity(intent)
+        }
+
+        drawable_button.setOnClickListener {
+            val intent = Intent(this, DrawableActivity::class.java)
             startActivity(intent)
         }
 

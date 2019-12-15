@@ -39,10 +39,8 @@ class LottieActivity : AppCompatActivity() {
             animProgress = lottieAnimationView.progress
 
             if (lottieAnimationView.isAnimating){
-                suspend_Button.text = "STOP"
                 lottieAnimationView.cancelAnimation()
             }else{
-                suspend_Button.text = "START"
                 lottieAnimationView.playAnimation()
             }
 

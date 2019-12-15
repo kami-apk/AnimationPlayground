@@ -2,38 +2,42 @@ package com.kamiapk.animationplayground
 
 import android.animation.AnimatorInflater
 import android.graphics.drawable.AnimatedVectorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.SystemClock.sleep
-import android.util.Log
+import android.os.Handler
 import kotlinx.android.synthetic.main.activity_animated_vector.*
-import kotlinx.android.synthetic.main.activity_main.*
 
 
-class AnimatedVectorActivity : AppCompatActivity() {
+class AnimatedVectorActivity : ScopedAppActivity() {
 
-    private var flag = true
+    //animationのフラグ
+    private var checkFlag = true
+    //animationが動作中なのかを判断するフラグ
+    private var isRunning = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_animated_vector)
-
         button.setOnClickListener {
+            if(isRunning == false) {
+                isRunning = true
+                fadeAnimation()
+                if (checkFlag) {
+                    checkToClose()
+                } else {
+                    closeToCheck()
+                }
+                checkFlag = !checkFlag
 
-            fadeAnimation()
-
-            if(flag){
-                Log.w("TT","bb")
-                checkToClose()
-            }else{
-                Log.w("TT","aa")
-                closeToCheck()
+                //一秒間ボタンが連続タップされても何も起こらないようにする
+                Handler().postDelayed(Runnable {
+                    isRunning = false
+                }, 1000)
             }
-
-            flag = !flag
 
         }
     }
+
+
 
 
     //Frame Animationと同じ手順
@@ -53,13 +57,12 @@ class AnimatedVectorActivity : AppCompatActivity() {
     }
 
     fun fadeAnimation() {
-
+        //0.5秒×2　でfade out-inを行う
         val fadeAnimator = AnimatorInflater.loadAnimator(this, R.animator.fastalpha)
         fadeAnimator?.apply {
             setTarget(button)
             start()
         }
-
     }
 
 }

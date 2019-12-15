@@ -26,11 +26,10 @@ class CodePropertyAnimationActivity : AppCompatActivity() {
     //XMLで記述していたこととほぼ同じ
     fun rotateAnimation(view: View) {
         //ObjectAnimatorクラスのofFloatメソッドでインスタンスを取得
-        //prppertyNameによってどんなアニメーションなのかを宣言
+        //propertyNameによってどんなアニメーションなのかを宣言
         rotateObjectAnimator = ObjectAnimator.ofFloat(imageview, "rotation", 0.0f, -180.0f)
 
         rotateObjectAnimator?.apply {
-
             duration = 1000
             repeatCount = 1
             repeatMode = ValueAnimator.REVERSE
@@ -40,10 +39,7 @@ class CodePropertyAnimationActivity : AppCompatActivity() {
         }
     }
 
-
-
     fun scaleAnimation(view: View) {
-
         scaleObjectAnimator = ObjectAnimator.ofFloat(imageview, "scaleX", 1.0f, 3.0f)
         scaleObjectAnimator?.apply {
             duration = 1000
